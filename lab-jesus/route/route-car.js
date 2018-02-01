@@ -31,7 +31,7 @@ module.exports = function(router) {
     })
     .put(bodyParser, (req, res) => {
       return Car.findByIdAndUpdate(req.params._id,req.body)
-        .then((stuff) => res.status(200).json(stuff))
+        .then((stuff) => res.status(204).json(stuff))
         .catch(err => errorHandler(err, res));
     })
     .delete((req, res) => {

@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">90.91% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>20/22</span>
+        <span class='fraction'>32/32</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">100% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>2/4</span>
+        <span class='fraction'>4/4</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>3/3</span>
+        <span class='fraction'>7/7</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>19/19</span>
+        <span class='fraction'>29/29</span>
       </div>
     </div>
   </div>
@@ -77,30 +77,24 @@
 32
 33
 34
-35</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
+35
+36
+37
+38
+39
+40
+41
+42
+43
+44
+45
+46
+47
+48
+49
+50</td><td class="line-coverage quiet"><span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-yes">4x</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
@@ -111,47 +105,98 @@
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
 <span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">4x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-yes">6x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-yes">5x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">'use strict';
 &nbsp;
 // Application dependencies
+const cors = require('cors');
 const express = require('express');
+const mongoose = require('mongoose');
 const errorHandler = require('./error-handler');
-&nbsp;
 &nbsp;
 // Application setup
 const app = express();
+const PORT = process.env.PORT;
 const router = express.Router();
-app.use('/api/v1', router);
+const MONGODB_URI = process.env.MONGODB_URI;
 // app.use(bodyParser) // Applies the package to every route in the app
+//Middlewarev
+app.use(cors());
+app.use('/api/v1', router);
+require('../route/route-car')(router);
+app.use('/{0,}', (req, res) =&gt; errorHandler(new Error('Path Error. Route not found.'), res));
 &nbsp;
 // Route setup
-require('../route/route-note')(router);
 // require('../route/route-category')(router)
-app.use('/*', (req, res) =&gt; errorHandler(new Error('Path Error. Route not found.'), res));
 &nbsp;
 // Server controls
 const server = module.exports = {};
-server.isOn = false;
-server.http = null;
+server.start = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    if(server.isOn) return reject(new Error('Server running. Cannot start server again'));
 &nbsp;
-server.start = function(port, callback) {
-  <span class="missing-if-branch" title="if path not taken" >I</span>if(server.isOn) <span class="cstat-no" title="statement not covered" >return callback(new Error('Server running. Cannot start server again.'));</span>
-  server.isOn = true;
-  server.http = app.listen(port, callback);
-  return server.http;
+    server.http = app.listen(PORT, () =&gt; {
+      console.log(`Listening on ${PORT}`);
+      server.isOn = true;
+      server.db = mongoose.connect(MONGODB_URI);
+      return resolve(server);
+    });
+  });
 };
 &nbsp;
-server.stop = function(callback) {
-  <span class="missing-if-branch" title="if path not taken" >I</span>if(!server.isOn) <span class="cstat-no" title="statement not covered" >return callback(new Error('Server not running. You\'re dumb. Don\'t do that.'));</span>
-  server.isOn = false;
-  server.http.close(callback);
+server.stop = () =&gt; {
+  return new Promise((resolve, reject) =&gt; {
+    if(!server.isOn) return reject(new Error('Server not running. Cannot shut server down'));
+&nbsp;
+    server.http.close(() =&gt; {
+      console.log('Shutting down server');
+      mongoose.disconnect();
+      server.isOn = false;
+      return resolve(server);
+    });
+  });
 };</pre></td></tr>
 </table></pre>
 <div class='push'></div><!-- for sticky footer -->
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 31 2018 15:50:42 GMT-0800 (PST)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Wed Jan 31 2018 20:31:11 GMT-0800 (PST)
 </div>
 </div>
 <script src="../prettify.js"></script>

@@ -8,4 +8,4 @@ const Car = mongoose.Schema({
   'mpg': { type: Number },
 }, {timestamps: true});
 
-module.exports = mongoose.model('cars', Car)
+module.exports = mongoose.model('cars', Car);

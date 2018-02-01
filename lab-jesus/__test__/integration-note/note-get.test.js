@@ -1,30 +1,48 @@
 'use strict';
 
+const superagent = require('superagent');
 const server = require('../../lib/server');
 require('jest');
-// require('dotenv').config({path: './../.test.env'})
+const PORT = process.env.PORT;
+let api = `:${PORT}/api/v1/car`;
 
-// require('dotenv').config()
 
-describe('POST /api/v1/note', function () {
-  beforeAll(() => server.start(process.env.PORT, (err) => console.log(`Listening on ${process.env.PORT}`)))
+describe('Route Delete', function() {
+  beforeAll(() => server.start(PORT, () => {
+    console.log(`listening on ${PORT}`);
+  }));
   afterAll(() => server.stop());
 
-  describe('Valid req/res', () => {
 
-  });
+  ///stuff
+  describe('Route Testing', () => {
+    this.testCar = { make: 'Honda', model: 'Civic', mpg: 28 };
+    beforeAll(() => server.start(PORT, () => console.log(`listening on ${PORT}`)));
+    afterAll(() => server.stop());
 
-  describe('Invalid req/res', () => {
-    it('should return true', () => expect(true).toBeTruthy());
-  });
-});
+    describe('PUT /api/v1/car', () => {
+      beforeAll(() => {
+        return superagent.post(api)
+          .send(this.testCar)
+          .then(res => this.response = res)
+          .then(() => this.testCar._id = this.response.body._id);
+      });
 
-
-// it('should return a status 404 on bad id parameter', () => {
-//   return superagent.post(':4000/api/v1/note/')
-//     .send(this.mockNote)
-//     .catch(err => {
-//       expect(err.status).toBe(404)
-//       expect(err.response.text).toMatch(/path error/i)
-//     })
-// })
+      describe('Valid Routes/Data', () => {
+        it('Should respond with a status 204', () => {
+          this.testCar.content = 'updated';
+          return superagent.put(`${api}/${this.testCar._id}`)
+            .send(this.testCar)
+            .then(res => {
+              expect(res.status).toBe(204);
+            });
+        });
+      });
+      describe('Invalid Routes/Data', () => {
+        it('Should return a status 400 if data is not sent with the put request', () => {
+          return superagent.put(`${api}/${this.testCar._id}`)
+            .catch(err => expect(err.status).toBe(400));
+        });
+      });
+    });
+  });});
